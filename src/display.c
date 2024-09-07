@@ -14,7 +14,7 @@
 #include "libft.h"
 
 void display_grid(board_t *board) {
-  static const char *str[] = {"  ", "🟡", "🔴"};
+  static const char *str[] = {"  ", "🟡", "🔴", "🟢"};
 
   ft_printf("\033c");
 

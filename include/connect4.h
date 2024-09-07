@@ -22,23 +22,24 @@
 #define TIME_TO_DROP (300000)
 
 typedef enum __attribute__((__packed__)) {
-    EMPTY = 0,
-    PLAYER = 1,
-    IA = 2,
+  EMPTY = 0,
+  PLAYER = 1,
+  IA = 2,
+  WIN = 3,
 } pawn_t;
 
-typedef struct
-{
-	pawn_t		*grid;
-    uint32_t	height;
-    uint32_t	width;
-    uint32_t	played_pawns;
-	pawn_t		next_play;
-	bool		is_finished;
-}	board_t;
+typedef struct __attribute__((__packed__)) {
+  pawn_t *grid;
+  uint32_t height;
+  uint32_t width;
+  uint32_t played_pawns;
+  pawn_t next_play;
+  bool is_finished;
+} board_t;
 
 pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y);
 void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn);
+bool check_win(board_t *board, uint32_t x, uint32_t y);
 
 int8_t	parse_arguments(int argc, char **argv, board_t *board);
 void    deinitialize_board(board_t *board);
