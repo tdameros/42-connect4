@@ -6,13 +6,14 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:27:45 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 20:17:35 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 21:31:50 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <limits.h>
 
+#include <libft.h>
 #include "connect4.h"
 
 static uint32_t count_empty_pawn(board_t *board);
@@ -21,8 +22,15 @@ static uint32_t ia_get_column(board_t *board);
 static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t player);
 
 void ai_play(board_t *board) {
-  drop_pawn(board, ia_get_column(board));
-  display_grid(board);
+  if (drop_pawn(board, ia_get_column(board)) == -1)
+  {
+    while (drop_pawn(board, rand() % board->width))
+      ;
+    display_grid(board);
+    ft_printf("AI Played random...\n");
+  }
+  else 
+    display_grid(board);
 }
 
 static uint32_t ia_get_column(board_t *board) {
@@ -76,13 +84,14 @@ static uint32_t sim_drop_pawn(board_t *board, uint32_t x) {
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
     y++;
   }
-  return y;
+  return y - 1;
 }
 
 static uint32_t count_empty_pawn(board_t *board) {
-  uint32_t count = 0;
-  for (uint32_t i = 0; i < board->height * board->width; i++) {
-    count += board->grid[i] == EMPTY;
-  }
-  return count;
+  return (board->width * board->height - board->played_pawns);
+  // uint32_t count = 0;
+  // for (uint32_t i = 0; i < board->height * board->width; i++) {
+  //   count += board->grid[i] == EMPTY;
+  // }
+  // return count;
 }

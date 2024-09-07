@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:14:58 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 17:55:58 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 21:29:52 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# define GRID_MIN_HEIGHT (6)
-# define GRID_MIN_WIDTH (7)
+# define GRID_MIN_HEIGHT (6) // 6
+# define GRID_MIN_WIDTH (7) // 7
+# define MAX_DEPTH (7)
 
 #define TIME_TO_DROP (200000)
 
