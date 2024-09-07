@@ -83,7 +83,7 @@ re:				fclean
 				$(MAKE) all
 
 .PHONY: debug
-debug:	fclean
+debug:
 				$(MAKE) all CFLAGS="$(DEBUG_CFLAGS)"
 
 .PHONY: check-format

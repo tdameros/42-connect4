@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 18:03:16 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 20:15:34 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y) {
 }
 
 void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn) {
+  ft_printf("x=%d, y=%d\n", x, y);
   board->grid[y * board->width + x] = pawn;
 }
 
@@ -69,8 +70,10 @@ int main(int argc, char **argv) {
         deinitialize_board(&board);
         return (play == -1);
       }
+      printf("nextplay=%d\n", board.next_play);
     } else {
       ai_play(&board);
+      printf("nextplay=%d\n", board.next_play);
     }
   }
   deinitialize_board(&board);
