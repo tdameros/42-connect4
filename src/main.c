@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
   board_t board;
 
   if (parse_arguments(argc, argv, &board)) {
-      return (1);
+    return (1);
   }
 
   display_grid(&board);

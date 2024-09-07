@@ -10,45 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
-#include "libft.h"
 #include "connect4.h"
+#include "libft.h"
 
 static int8_t initialize_board(board_t *board, uint32_t height, uint32_t width);
 
-int8_t	parse_arguments(int argc, char **argv, board_t *board) {
-	if (argc == 1) {
-		return (initialize_board(board, GRID_MIN_HEIGHT, GRID_MIN_WIDTH));
-	} else if (argc == 3) {
-		char	*endptr;
-		long 	height;
-		long	width;
+int8_t parse_arguments(int argc, char **argv, board_t *board) {
+  if (argc == 1) {
+    return (initialize_board(board, GRID_MIN_HEIGHT, GRID_MIN_WIDTH));
+  } else if (argc == 3) {
+    char *endptr;
+    long height;
+    long width;
 
-		errno = 0;
-		height = ft_strtol(argv[1], &endptr);
-		if (*endptr || errno || height < GRID_MIN_HEIGHT || height >= UINT32_MAX) {
-			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [ROWS] argument\n", argv[1]);
-			return (-1);
-		}
-		width = ft_strtol(argv[2], &endptr);
-		if (*endptr || errno || width < GRID_MIN_WIDTH || width >= UINT32_MAX) {
-			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [COLS] argument\n", argv[2]);
-			return (-1);
-		}
-		return (initialize_board(board, height, width));
-	}
-	ft_dprintf(STDERR_FILENO, "error: Invalid arguments\nusage: ./connect4 [ROWS] [COLS]\n");
-	return (-1);
+    errno = 0;
+    height = ft_strtol(argv[1], &endptr);
+    if (*endptr || errno || height < GRID_MIN_HEIGHT || height >= UINT32_MAX) {
+      ft_dprintf(STDERR_FILENO, "error: %s: Invalid [ROWS] argument\n",
+                 argv[1]);
+      return (-1);
+    }
+    width = ft_strtol(argv[2], &endptr);
+    if (*endptr || errno || width < GRID_MIN_WIDTH || width >= UINT32_MAX) {
+      ft_dprintf(STDERR_FILENO, "error: %s: Invalid [COLS] argument\n",
+                 argv[2]);
+      return (-1);
+    }
+    return (initialize_board(board, height, width));
+  }
+  ft_dprintf(STDERR_FILENO,
+             "error: Invalid arguments\nusage: ./connect4 [ROWS] [COLS]\n");
+  return (-1);
 }
 
-static int8_t initialize_board(board_t *board, uint32_t height, uint32_t width) {	
+static int8_t initialize_board(board_t *board, uint32_t height,
+                               uint32_t width) {
   srand(time(NULL));
   if (NULL == board) {
-	ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
+    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
   board->grid = malloc(height * width * sizeof(*board->grid));
