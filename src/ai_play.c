@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:27:45 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 21:31:50 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 21:40:51 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,5 @@ static uint32_t sim_drop_pawn(board_t *board, uint32_t x) {
 }
 
 static uint32_t count_empty_pawn(board_t *board) {
-  return (board->width * board->height - board->played_pawns);
-  // uint32_t count = 0;
-  // for (uint32_t i = 0; i < board->height * board->width; i++) {
-  //   count += board->grid[i] == EMPTY;
-  // }
-  // return count;
+  return (board->max_pawns - board->played_pawns);
 }

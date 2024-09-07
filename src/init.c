@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:27:13 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 16:03:49 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 22:44:43 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,17 @@ static int8_t initialize_board(board_t *board, uint32_t height,
     ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
-  board->grid = malloc(height * width * sizeof(*board->grid));
+  board->grid = malloc(width * height * sizeof(*board->grid));
   if (NULL == board->grid) {
     return -1;
   }
-  for (uint32_t i = 0; i < height * width; i++) {
+  for (uint32_t i = 0; i < width * height; i++) {
     board->grid[i] = EMPTY;
   }
   board->height = height;
   board->width = width;
   board->played_pawns = 0;
+  board->max_pawns = width * height;
   board->next_play = rand() % 2 ? PLAYER : IA;
   board->is_finished = 0;
   return 0;
@@ -75,4 +76,6 @@ void deinitialize_board(board_t *board) {
   board->height = 0;
   board->width = 0;
   board->played_pawns = 0;
+  board->max_pawns = 0;
+  board->is_finished = 0;
 }

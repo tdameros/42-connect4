@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 20:44:11 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 21:53:42 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int main(int argc, char **argv) {
       printf("nextplay=%d\n", board.next_play);
     }
   }
-  deinitialize_board(&board);
+  display_winner(&board);
   return 0;
 }
