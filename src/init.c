@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:27:13 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 15:30:52 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 16:03:49 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,24 @@ int8_t	parse_arguments(int argc, char **argv, board_t *board) {
 		errno = 0;
 		height = ft_strtol(argv[1], &endptr);
 		if (*endptr || errno || height < GRID_MIN_HEIGHT || height >= UINT32_MAX) {
-			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [COLS] argument\n", argv[1]);
+			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [ROWS] argument\n", argv[1]);
 			return (-1);
 		}
 		width = ft_strtol(argv[2], &endptr);
 		if (*endptr || errno || width < GRID_MIN_WIDTH || width >= UINT32_MAX) {
-			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [ROWS] argument\n", argv[2]);
+			ft_dprintf(STDERR_FILENO, "error: %s: Invalid [COLS] argument\n", argv[2]);
 			return (-1);
 		}
-		return (initialize_board(board, width, height));
+		return (initialize_board(board, height, width));
 	}
-	ft_dprintf(STDERR_FILENO, "error: Invalid arguments\nusage: ./connect4 [COLS] [ROWS]\n");
+	ft_dprintf(STDERR_FILENO, "error: Invalid arguments\nusage: ./connect4 [ROWS] [COLS]\n");
 	return (-1);
 }
 
 static int8_t initialize_board(board_t *board, uint32_t height, uint32_t width) {	
   srand(time(NULL));
   if (NULL == board) {
+	ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
   board->grid = malloc(height * width * sizeof(*board->grid));

@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 15:32:38 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 15:40:41 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
   }
   uint8_t y = 0;
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
+    set_pawn(board, x, y, board->next_play);
+    display_grid(board);
+    usleep(TIME_TO_DROP / board->height);
+    set_pawn(board, x, y, EMPTY);
     y++;
   }
   set_pawn(board, x, y - 1, board->next_play);
@@ -144,24 +148,12 @@ int main(int argc, char **argv) {
       return (1);
   }
 
-  //  drop_pawn(&board, 0);
-  //  drop_pawn(&board, 0);
-  //  drop_pawn(&board, 1);
-  //  drop_pawn(&board, 1);
-  //  drop_pawn(&board, 2);
-  //  drop_pawn(&board, 2);
-  //  drop_pawn(&board, 3);
-  //  drop_pawn(&board, 3);
-
-  // printf("Is win: %d\n", board.is_finished);
   display_grid(&board);
 
   while (board.played_pawns < board.width * board.height &&
          !board.is_finished) {
     while (drop_pawn(&board, rand() % board.width))
       ;
-    display_grid(&board);
-    printf("\n");
     usleep(100000);
   }
 
