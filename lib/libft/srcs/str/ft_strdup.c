@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2023/11/08 15:31:29 by ibertran          #+#    #+#             */
+/*   Updated: 2024/03/09 20:30:39 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <stdlib.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
+#include "ft_string.h"
 
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	char	*ptr;
 
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+	ptr = NULL;
+	len = ft_strlen(s);
+	ptr = malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
+	ptr[len] = '\0';
+	while (len--)
+		ptr[len] = s[len];
+	return (ptr);
+}

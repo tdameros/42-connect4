@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2023/12/31 00:59:27 by ibertran          #+#    #+#             */
+/*   Updated: 2023/12/31 01:01:41 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "stddef.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	size_t	i;
 
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
-
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+	i = 0;
+	while (str1[i] && str2[i] && str1[i] == str2[i])
+		i++;
+	return (str1[i] - str2[i]);
+}

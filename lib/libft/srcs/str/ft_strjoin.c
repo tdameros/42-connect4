@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2023/11/10 10:45:01 by ibertran          #+#    #+#             */
+/*   Updated: 2024/03/15 21:48:10 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	size_t	len1;
+	size_t	len2;
 
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
-
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = 0;
+	len2 = 0;
+	if (s1)
+		len1 = ft_strlen(s1);
+	if (s2)
+		len2 = ft_strlen(s2);
+	ptr = ft_calloc(len1 + len2 + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, s1, len1 + len2 + 1);
+	ft_strlcat(ptr, s2, len1 + len2 + 1);
+	return (ptr);
+}

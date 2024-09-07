@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2023/11/07 21:55:31 by ibertran          #+#    #+#             */
+/*   Updated: 2023/11/13 09:50:55 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
-
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (i < n - 1 && s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+}

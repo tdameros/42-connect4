@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_vsort_intascend.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2024/03/17 04:16:43 by ibertran          #+#    #+#             */
+/*   Updated: 2024/03/17 04:35:48 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
-
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
-
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+int	ft_vsort_intascend(void *ptr1, void*ptr2)
+{
+	return (*(int *)ptr1 > *(int *)ptr2);
+}

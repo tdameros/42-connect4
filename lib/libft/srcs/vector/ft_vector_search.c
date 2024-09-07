@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_vector_search.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 22:07:00 by ibertran          #+#    #+#             */
-/*   Updated: 2024/04/19 22:07:03 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2024/03/13 03:38:16 by ibertran          #+#    #+#             */
+/*   Updated: 2024/04/29 16:29:17 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "ft_vector.h"
+#include "ft_mem.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
-# endif
+void	*ft_vector_search(t_vector *v, const void *item)
+{
+	void	*ptr;
+	size_t	index;
 
-# ifndef GNL_VECTOR_SIZE
-#  define GNL_VECTOR_SIZE 32
-# endif
-
-# ifndef GNL_OPEN_MAX
-#  define GNL_OPEN_MAX 1024
-# endif
-
-#endif
+	if (!v)
+		return (NULL);
+	index = 0;
+	while (index < v->total)
+	{
+		ptr = v->ptr + index * v->infos.data_size;
+		if (!ft_memcmp(ptr, item, v->infos.data_size))
+			return (ptr);
+		index++;
+	}
+	return (NULL);
+}
