@@ -16,7 +16,7 @@
 void display_grid(board_t *board) {
   static const char *str[] = {"  ", "🟡", "🔴"};
 
-  // ft_printf("\033c");
+  ft_printf("\033c");
 
   ft_printf("┌");
   for (uint32_t x = 0; x < board->width * 3 - 1; x++) {
@@ -40,4 +40,5 @@ void display_grid(board_t *board) {
     ft_printf("─");
   }
   ft_printf("┘");
+  ft_printf("\n");
 }
