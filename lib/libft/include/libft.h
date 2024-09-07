@@ -3,77 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 23:40:31 by tdameros          #+#    #+#             */
-/*   Updated: 2022/11/06 17:13:05 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2024/04/19 22:07:07 by ibertran          #+#    #+#             */
+/*   Updated: 2024/09/07 15:21:47 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdlib.h>
+/* INCLUDES *******************************************************************/
 
-char	*get_next_line(int fd);
-int		ft_printf(const char *format, ...);
+# include "ft_char.h"
+# include "ft_integer.h"
+# include "ft_lst.h"
+# include "ft_mem.h"
+# include "ft_misc.h"
+# include "ft_string.h"
+# include "ft_vector.h"
 
-int		ft_isalpha(int c);
-int		ft_isdigit(int c);
-int		ft_isalnum(int c);
-int		ft_isascii(int c);
-int		ft_isprint(int c);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
+/* MISC FUNCTIONS *************************************************************/
 
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-void	*ft_memchr(const void *s, int c, size_t n);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
+int		ft_close(int *fd);
+void	ft_free_array(void **array);
+void	ft_free_2darray_char(char **array);
+int		get_fd_content(int fd, char **content);
+int		get_next_line(int fd, char **line);
 
-size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strrchr(const char *s, int c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strnstr(const char *s1, const char *s2, size_t n);
-char	*ft_strdup(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char const *s1, char const *set);
-char	**ft_split(char const *s, char c);
-void	*ft_free_split(char **tab);
-int		ft_is_number(char *s);
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+/* FT_PRINTF ******************************************************************/
 
-int		ft_atoi(const char *nptr);
-char	*ft_itoa(int n);
+int		ft_printf(const char *str, ...);
+int		ft_dprintf(int fd, const char *str, ...) \
+				__attribute__ ((format (printf, 2, 3)));
+char	*ft_sprintf(const char *str, ...) \
+				__attribute__ ((format (printf, 1, 2)));
 
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	*ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
-#endif
+#endif //LIBFT_H

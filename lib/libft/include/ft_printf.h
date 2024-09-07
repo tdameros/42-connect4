@@ -3,43 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 05:04:07 by tdameros          #+#    #+#             */
-/*   Updated: 2022/11/15 05:04:08 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2023/11/19 14:29:15 by ibertran          #+#    #+#             */
+/*   Updated: 2024/04/19 22:14:18 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdarg.h>
+# include <sys/types.h>
 
-# define HEXA_BASE_LOWER "0123456789abcdef"
-# define HEXA_BASE_UPPER "0123456789ABCDEF"
+# include "ft_vector.h"
 
-// String functions
-int		print_str(char *str);
-int		print_char(char c);
-size_t	ft_strlen(const char *s);
+typedef int	(*t_convert)(t_vector *, va_list *);
 
-// Number functions
-int		print_number(long number);
-int		long_len(long number);
-char	*int_to_str(long number);
+int	add_conversion(char specifier, t_vector *buffer, va_list *args);
+int	pf_build_buffer(const char *str, t_vector *buffer, va_list *args);
+int	print_buffer(int fd, t_vector *buffer);
 
-// Hexa functions
-int		print_hexa(unsigned int number, char *base);
-int		print_pointer(void *pointer);
-char	*int_to_hexa(unsigned int number, char *base);
-char	*pointer_to_hexa(unsigned long long number, char *base);
-int		conversion_hexa_len(unsigned long long number);
+// conversion
+int	convert_char(t_vector *buffer, va_list *args);
+int	convert_hexlow(t_vector *buffer, va_list *args);
+int	convert_hexup(t_vector *buffer, va_list *args);
+int	convert_int(t_vector *buffer, va_list *args);
+int	convert_percent(t_vector *buffer, va_list *args);
+int	convert_string(t_vector *buffer, va_list *args);
+int	convert_uint(t_vector *buffer, va_list *args);
 
-// Ft_printf function
-int		ft_printf(const char *format, ...);
-int		is_valid_type(char c);
-int		print_conversion(char type, va_list args);
-
-#endif
+#endif //FT_PRINTF_H
