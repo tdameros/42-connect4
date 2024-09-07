@@ -183,26 +183,26 @@ int main(int argc, char **argv) {
     return (1);
   }
 
-//  drop_pawn(&board, 0);
-//  drop_pawn(&board, 0);
-//  drop_pawn(&board, 1);
-//  drop_pawn(&board, 1);
-//  drop_pawn(&board, 2);
-//  drop_pawn(&board, 2);
-//  drop_pawn(&board, 3);
-//  drop_pawn(&board, 3);
+  //  drop_pawn(&board, 0);
+  //  drop_pawn(&board, 0);
+  //  drop_pawn(&board, 1);
+  //  drop_pawn(&board, 1);
+  //  drop_pawn(&board, 2);
+  //  drop_pawn(&board, 2);
+  //  drop_pawn(&board, 3);
+  //  drop_pawn(&board, 3);
 
   // printf("Is win: %d\n", board.is_finished);
   display_grid(&board);
 
-   while (board.played_pawns < board.width * board.height &&
-   !board.is_finished) {
-     while (drop_pawn(&board, rand() % board.width))
-       ;
-     display_grid(&board);
-     printf("\n");
-     usleep(100000);
-   }
+  while (board.played_pawns < board.width * board.height &&
+         !board.is_finished) {
+    while (drop_pawn(&board, rand() % board.width))
+      ;
+    display_grid(&board);
+    printf("\n");
+    usleep(100000);
+  }
 
   (void)argv;
   deinitialize_board(&board);
