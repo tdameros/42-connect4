@@ -32,12 +32,11 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
   }
   uint8_t y = 0;
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
-
-    if ((uint32_t) TIME_TO_DROP / board->height > 5000) {
-          set_pawn(board, x, y, board->next_play);
+    if ((uint32_t)TIME_TO_DROP / board->height > 5000) {
+      set_pawn(board, x, y, board->next_play);
       display_grid(board);
       usleep(TIME_TO_DROP / board->height);
-          set_pawn(board, x, y, EMPTY);
+      set_pawn(board, x, y, EMPTY);
     }
 
     y++;

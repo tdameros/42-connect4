@@ -14,8 +14,8 @@
 
 #include "connect4.h"
 
-void	ai_play(board_t *board) {
-    while (drop_pawn(board, rand() % board->width))
+void ai_play(board_t *board) {
+  while (drop_pawn(board, rand() % board->width))
     ;
-    display_grid(board);
+  display_grid(board);
 }
