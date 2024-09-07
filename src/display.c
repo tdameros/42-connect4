@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 13:42:02 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 16:43:41 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 void display_grid(board_t *board) {
-  static const char *str[] = {"  ", "🟡", "🔴"};
+  static const char *str[] = {"  ", "🟡", "🔴", "🔵"};
 
   ft_printf("\033c");
 

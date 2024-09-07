@@ -6,3 +6,4 @@ LIST_SRC		=	\
 					main.c \
 					display.c \
 					init.c \
+					win.c

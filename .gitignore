@@ -2,6 +2,7 @@
 connect4
 .scores
 libft.a
+.make/
 
 # IDE
 .vscode
