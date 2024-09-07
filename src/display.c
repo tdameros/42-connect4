@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 16:43:41 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 18:12:53 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void display_grid(board_t *board) {
 
   ft_printf("\033c");
 
+  ft_printf(" ");
+  for (uint32_t x = 0; x < board->width; x++) {
+    if (get_pawn(board, x, 0) != EMPTY) {
+      ft_printf("    ", x % 10);
+    } else {
+      ft_printf("↓%d ", x % 10);
+    }
+  }
+  ft_printf("\n");
   ft_printf("┌");
   for (uint32_t x = 0; x < board->width * 3 - 1; x++) {
     ft_printf("─");

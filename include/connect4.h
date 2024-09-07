@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:14:58 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 16:00:06 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 17:55:58 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define GRID_MIN_HEIGHT (6)
 # define GRID_MIN_WIDTH (7)
 
-#define TIME_TO_DROP (300000)
+#define TIME_TO_DROP (200000)
 
 typedef enum __attribute__((__packed__)) {
   EMPTY = 0,
@@ -44,5 +44,9 @@ bool check_win(board_t *board, uint32_t x, uint32_t y);
 int8_t	parse_arguments(int argc, char **argv, board_t *board);
 void    deinitialize_board(board_t *board);
 void	display_grid(board_t *board);
+
+void	ai_play(board_t *board);
+int8_t	user_play(board_t *board);
+int8_t  drop_pawn(board_t *board, uint32_t x);
 
 #endif

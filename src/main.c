@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 15:40:41 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 18:03:16 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,14 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
   }
   uint8_t y = 0;
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
-    set_pawn(board, x, y, board->next_play);
-    display_grid(board);
-    usleep(TIME_TO_DROP / board->height);
-    set_pawn(board, x, y, EMPTY);
+
+    if ((uint32_t) TIME_TO_DROP / board->height > 5000) {
+          set_pawn(board, x, y, board->next_play);
+      display_grid(board);
+      usleep(TIME_TO_DROP / board->height);
+          set_pawn(board, x, y, EMPTY);
+    }
+
     y++;
   }
   set_pawn(board, x, y - 1, board->next_play);
@@ -60,12 +64,16 @@ int main(int argc, char **argv) {
 
   while (board.played_pawns < board.width * board.height &&
          !board.is_finished) {
-    while (drop_pawn(&board, rand() % board.width))
-      ;
-    usleep(100000);
+    if (board.next_play == PLAYER) {
+      int8_t play = user_play(&board);
+      if (play) {
+        deinitialize_board(&board);
+        return (play == -1);
+      }
+    } else {
+      ai_play(&board);
+    }
   }
-  display_grid(&board);
-  (void)argv;
   deinitialize_board(&board);
   return 0;
 }
