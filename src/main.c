@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 14:00:16 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/07 15:32:38 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,6 @@
 
 #include "connect4.h"
 #include "libft.h"
-
-int8_t initialize_board(board_t *board, uint32_t height, uint32_t width) {
-  if (NULL == board) {
-    return -1;
-  }
-  board->grid = malloc(height * width * sizeof(*board->grid));
-  if (NULL == board->grid) {
-    return -1;
-  }
-  for (uint32_t i = 0; i < height * width; i++) {
-    board->grid[i] = EMPTY;
-  }
-  board->height = height;
-  board->width = width;
-  board->played_pawns = 0;
-  board->next_play = rand() % 2 ? PLAYER : IA;
-  board->is_finished = 0;
-  return 0;
-}
-
-void deinitialize_board(board_t *board) {
-  free(board->grid);
-  board->height = 0;
-  board->width = 0;
-  board->played_pawns = 0;
-}
 
 pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y) {
   return board->grid[y * board->width + x];
@@ -164,23 +138,10 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
 }
 
 int main(int argc, char **argv) {
-  srand(time(NULL));
-
   board_t board;
 
-  if (argc == 1) {
-    if (initialize_board(&board, GRID_MIN_RAWS, GRID_MIN_COLS)) {
+  if (parse_arguments(argc, argv, &board)) {
       return (1);
-    }
-  } else if (argc == 3) {
-    // custom grid
-  } else {
-    // ft_dprintf(STDERR_FILENO, "error: Invalid arguments\nusage: ./connect4
-    // [GRID SIZE X] [GRID SIZE Y]");
-    ft_printf(
-        "error: Invalid arguments\nusage: ./connect4 [GRID SIZE X] [GRID SIZE "
-        "Y]");
-    return (1);
   }
 
   //  drop_pawn(&board, 0);
