@@ -36,7 +36,7 @@ typedef struct
 }	board_t;
 
 pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y);
-inline void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn);
+void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn);
 
 void	display_grid(board_t *board);
 
