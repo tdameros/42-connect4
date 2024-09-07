@@ -96,8 +96,8 @@ format:
 
 .PHONY: build_docker_image
 build_docker_image:
-				docker build -t connect4 .
+				docker build -t ${NAME} .
 
 .PHONY: run_docker_container
 run_docker_container:
-				docker run --rm -it connect4
+				docker run --rm -it ${NAME}
