@@ -56,15 +56,15 @@ static int8_t initialize_board(board_t *board, uint32_t height,
   }
   board->grid = malloc(width * height * sizeof(*board->grid));
   board->col_order = malloc(width * sizeof(*board->col_order));
-  board->heuristic_factor = malloc(width * height * sizeof(*board->heuristic_factor));
-  if (NULL == board->grid
-    || NULL == board->col_order
-    || NULL == board->heuristic_factor) {
-      free(board->grid);
-      free(board->col_order);
-      free(board->heuristic_factor);
-      ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
-      return -1;
+  board->heuristic_factor =
+      malloc(width * height * sizeof(*board->heuristic_factor));
+  if (NULL == board->grid || NULL == board->col_order ||
+      NULL == board->heuristic_factor) {
+    free(board->grid);
+    free(board->col_order);
+    free(board->heuristic_factor);
+    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
+    return -1;
   }
 
   for (uint32_t i = 0; i < width * height; i++) {

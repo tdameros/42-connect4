@@ -14,9 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "libft.h"
-
 #include "connect4.h"
+#include "libft.h"
 
 int8_t user_play(board_t *board) {
   uint32_t played = board->played_pawns;
@@ -58,14 +57,14 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
   }
   uint8_t y = 0;
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
-    #ifdef ANIMATION
+#ifdef ANIMATION
     if ((uint32_t)TIME_TO_DROP / board->height > 5000) {
       set_pawn(board, x, y, board->next_play);
       display_grid(board);
       usleep(TIME_TO_DROP / board->height);
       set_pawn(board, x, y, EMPTY);
     }
-    #endif
+#endif
     y++;
   }
   set_pawn(board, x, y - 1, board->next_play);

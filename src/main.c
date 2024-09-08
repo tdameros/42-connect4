@@ -15,13 +15,12 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "libft.h"
-
 #include "connect4.h"
+#include "libft.h"
 
 int main(int argc, char **argv) {
   board_t board = (board_t){0};
-  
+
   if (parse_arguments(argc, argv, &board)) {
     return (1);
   }

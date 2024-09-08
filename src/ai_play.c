@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
 #include <limits.h>
 #include <stdlib.h>
-
-#include <libft.h>
 
 #include "connect4.h"
 
 static uint32_t count_empty_pawn(board_t *board);
 static uint32_t sim_drop_pawn(board_t *board, uint32_t x);
-static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alpha, int32_t beta, pawn_t maximize);
+static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn,
+                       int32_t alpha, int32_t beta, pawn_t maximize);
 static uint32_t ai_get_best_column(board_t *board);
 
 void ai_play(board_t *board) {
@@ -45,7 +45,8 @@ static uint32_t ai_get_best_column(board_t *board) {
       break;
     }
     int32_t score = -minimax(board, ft_max(MIN_DEPTH, 77 / board->width),
-                                     board->next_play == AI ? PLAYER : AI, INT32_MIN, INT32_MAX, board->next_play);
+                             board->next_play == AI ? PLAYER : AI, INT32_MIN,
+                             INT32_MAX, board->next_play);
     if (score > best_score) {
       best_score = score;
       best_x = x;
@@ -55,7 +56,8 @@ static uint32_t ai_get_best_column(board_t *board) {
   return best_x;
 }
 
-static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alpha, int32_t beta, pawn_t maximize) {
+static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn,
+                       int32_t alpha, int32_t beta, pawn_t maximize) {
   if (0 == count_empty_pawn(board)) {
     return (0);
   } else if (0 == depth) {
@@ -88,8 +90,8 @@ static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alph
     uint32_t drop = sim_drop_pawn(board, x);
     set_pawn(board, x, drop, pawn);
     check_win(board, x, drop, false);
-    int32_t score =
-        -minimax(board, depth - 1, pawn == AI ? PLAYER : AI, alpha, beta, maximize);
+    int32_t score = -minimax(board, depth - 1, pawn == AI ? PLAYER : AI, alpha,
+                             beta, maximize);
     best_score = ft_max(best_score, score);
     if (maximize == pawn) {
       alpha = ft_max(alpha, best_score);
@@ -97,8 +99,7 @@ static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alph
       beta = ft_min(beta, -best_score);
     }
     set_pawn(board, x, drop, EMPTY);
-    if (beta <= alpha)
-      break;
+    if (beta <= alpha) break;
   }
   return best_score;
 }

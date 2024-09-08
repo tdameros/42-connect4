@@ -26,17 +26,14 @@ void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn) {
 }
 
 uint32_t get_heuristic_factor(board_t *board, uint32_t x, uint32_t y) {
-	return (board->heuristic_factor[y * board->width + x]);
+  return (board->heuristic_factor[y * board->width + x]);
 }
 
-void set_heuristic_factor(board_t *board, uint32_t x, uint32_t y, int8_t value) {
-	board->heuristic_factor[y * board->width + x] = value;
+void set_heuristic_factor(board_t *board, uint32_t x, uint32_t y,
+                          int8_t value) {
+  board->heuristic_factor[y * board->width + x] = value;
 }
 
-int32_t ft_max(int32_t a, int32_t b) {
-	return (a > b ? a : b);
-}
+int32_t ft_max(int32_t a, int32_t b) { return (a > b ? a : b); }
 
-int32_t ft_min(int32_t a, int32_t b) {
-	return (a < b ? a : b);
-}
+int32_t ft_min(int32_t a, int32_t b) { return (a < b ? a : b); }
