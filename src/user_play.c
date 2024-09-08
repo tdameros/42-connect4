@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:24:02 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 20:22:13 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 22:56:21 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@ int8_t user_play(board_t *board) {
     errno = 0;
     long parse = ft_strtol(gnl, &endptr);
     ft_printf("%d\n", parse);
-    if (endptr <= gnl || *endptr != '\n' || errno || parse < 0 ||
-        parse >= board->width) {
+    if (endptr <= gnl
+      || *endptr != '\n'
+      || *(endptr - 1) < '0'
+      || *(endptr - 1) > '9'
+      || errno
+      || parse < 0
+      || parse >= board->width) {
       display_grid(board);
       ft_printf("invalid input!\n");
     } else if (drop_pawn(board, parse)) {

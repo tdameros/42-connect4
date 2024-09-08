@@ -6,11 +6,9 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:19:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/08 18:57:19 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 23:07:16 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdbool.h>
 
 #include "connect4.h"
 

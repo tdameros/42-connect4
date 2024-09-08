@@ -6,13 +6,9 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:27:45 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 19:05:16 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 23:06:25 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <libft.h>
-#include <limits.h>
-#include <stdlib.h>
 
 #include "connect4.h"
 
