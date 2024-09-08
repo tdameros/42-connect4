@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:27:13 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 22:44:43 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 01:01:23 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int8_t initialize_board(board_t *board, uint32_t height,
   board->played_pawns = 0;
   board->max_pawns = width * height;
   board->next_play = rand() % 2 ? PLAYER : IA;
-  board->is_finished = 0;
+  board->is_finished = false;
   return 0;
 }
 
@@ -77,5 +77,5 @@ void deinitialize_board(board_t *board) {
   board->width = 0;
   board->played_pawns = 0;
   board->max_pawns = 0;
-  board->is_finished = 0;
+  board->is_finished = false;
 }

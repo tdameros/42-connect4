@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:14:58 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 21:58:17 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 02:05:07 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 # define GRID_MIN_HEIGHT (6) // 6
 # define GRID_MIN_WIDTH (7) // 7
-# define MAX_DEPTH (7)
+# define MAX_DEPTH (6)
 
 # define YELLOW "\e[43;1m"
 # define RED "\e[41;1m"
 # define BLUE "\e[44;1m"
-# define RESET "\e[41;1m"
+# define RESET "\e[0;m"
 
 #define TIME_TO_DROP (200000)
 
@@ -31,8 +31,13 @@ typedef enum __attribute__((__packed__)) {
   EMPTY = 0,
   PLAYER = 1,
   IA = 2,
-  WIN = 3,
+  VICTORY = 3,
 } pawn_t;
+
+typedef enum {
+  LOSS = -1,
+  WIN = 1
+} goal_t;
 
 typedef struct __attribute__((__packed__)) {
   pawn_t *grid;
