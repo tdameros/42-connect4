@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:27:13 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 01:01:23 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 12:56:27 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,41 @@ static int8_t initialize_board(board_t *board, uint32_t height,
                                uint32_t width) {
   srand(time(NULL));
   if (NULL == board) {
-    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
   board->grid = malloc(width * height * sizeof(*board->grid));
   if (NULL == board->grid) {
+    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
   for (uint32_t i = 0; i < width * height; i++) {
     board->grid[i] = EMPTY;
   }
+  board->col_order = malloc(width * sizeof(*board->col_order));
+  if (NULL == board->col_order) {
+    free(board->grid);
+    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
+    return -1;
+  }
   board->height = height;
   board->width = width;
+  int32_t middle = board->width / 2;
+  int32_t left_index = middle - 1;
+  int32_t right_index = middle + 1;
+  uint32_t index = 1;
+  board->col_order[0] = middle;
+  while (left_index >= 0 || right_index < (int32_t)board->width) {
+    if (left_index >= 0) {
+      board->col_order[index] = left_index;
+      left_index--;
+      index++;
+    }
+    if (right_index < (int32_t)board->width) {
+      board->col_order[index] = right_index;
+      right_index++;
+      index++;
+    }
+  }
   board->played_pawns = 0;
   board->max_pawns = width * height;
   board->next_play = rand() % 2 ? PLAYER : IA;

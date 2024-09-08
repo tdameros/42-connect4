@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 01:22:38 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 13:00:07 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void display_grid(board_t *board) {
   static const char *str[] = {"  ", "🔴", "🟡", "🔵"};
 
-  // ft_printf("\033c");
+  ft_printf("\033c");
 
   ft_printf(" ");
   for (uint32_t x = 0; x < board->width; x++) {
