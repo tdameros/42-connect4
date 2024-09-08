@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:24:02 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 19:05:51 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 20:22:13 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int8_t user_play(board_t *board) {
   uint32_t played = board->played_pawns;
-  char *color[] = {"\e[0m", "\e[33m", "\e[31m"};
+  char *color[] = {"\e[0m", "🔴 \e[31;1m", "🟡 \e[33;1m"};
   char *gnl;
   char *endptr;
 

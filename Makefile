@@ -1,103 +1,234 @@
-#*******************************  VARIABLES  **********************************#
+NAME = connect4
 
-NAME			=	connect4
+# *** FILES ****************************************************************** #
 
-# --------------- FILES --------------- #
+MAKE_DIR := .make/
+BUILD_DIR := $(MAKE_DIR)$(shell git branch --show-current)/
 
-include src.mk
+SRCS_DIR = src/
+SRCS = $(addsuffix .c, $(SRC))
 
-# ------------ DIRECTORIES ------------ #
+OBJS = $(patsubst %.c,$(BUILD_DIR)%.o,$(SRCS))
 
-DIR_BUILD		=	.build/
-DIR_INCLUDES 	=	\
-					$(DIR_INCLUDE) \
-					$(DIR_LIBFT)include/
-DIR_LIB			= 	lib/
-DIR_LIBFT		=	$(DIR_LIB)libft/
-LIBFT			=	$(DIR_LIBFT)libft.a
+DEPS = $(patsubst %.o,%.d,$(OBJS))
 
-# ------------- SHORTCUTS ------------- #
+SRC = \
+	ai_play \
+	display	\
+	heuristic \
+	init		\
+	main		\
+	user_play	\
+	utils \
+	win \
+	score \
 
-OBJ				=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
-DEP				=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
-SRC				=	$(addprefix $(DIR_SRC),$(LIST_SRC))
-INCLUDES		=	$(addprefix -I , $(DIR_INCLUDES))
-MAKELIBFT		=	$(MAKE) -C $(DIR_LIBFT)
+# *** LIBRARIES && INCLUDES  ************************************************* #
 
-# ------------ COMPILATION ------------ #
+LIBS_PATH = \
+	lib/libft/libft.a \
+		
+LIBS = \
+	$(patsubst lib%.a,%,$(notdir $(LIBS_PATH))) \
 
-CFLAGS			=	-Wall -Wextra -Werror -O3
-DEBUG_CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g3
+INCS_DIR = include/
+INCS = \
+	$(INCS_DIR) \
+	$(dir $(LIBS_PATH)) \
+	$(addsuffix $(INCS_DIR),$(dir $(LIBS_PATH))) \
 
-DEP_FLAGS		=	-MMD -MP
+# *** CONFIG ***************************************************************** #
 
-# -------------  COMMANDS ------------- #
+CFLAGS		=	-Wall -Wextra -Werror $(OFLAGS)
+OFLAGS 		=	-Ofast
 
-RM				=	rm -rf
-MKDIR			=	mkdir -p
-OS				=	$(shell uname -s)
+DEFINES		=
 
-ifeq ($(OS), Linux)
-	LIBS_FLAGS		=	-L$(DIR_LIBFT) -lft
+CPPFLAGS 	=	\
+				$(addprefix -D, $(DEFINES)) \
+				$(addprefix -I, $(INCS)) \
+				-MMD -MP \
+
+LDFLAGS		=	$(addprefix -L, $(dir $(LIBS_PATH)))
+LDLIBS		=	$(addprefix -l, $(LIBS))
+
+MAKEFLAGS	=	--no-print-directory
+
+# *** COMPILATION MODES ****************************************************** #
+
+MODE_TRACE = $(MAKE_DIR).trace 
+LAST_MODE = $(shell cat $(MODE_TRACE) 2>/dev/null)
+
+MODE ?=
+
+ifneq ($(MODE),)
+BUILD_DIR := $(BUILD_DIR)$(MODE)/
 endif
-ifeq ($(OS), Darwin)
-	LIBS_FLAGS		=	-L$(DIR_LIBFT) -lft
+
+ifeq ($(MODE),debug)
+CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3
+else ifeq ($(MODE),fsanitize)
+CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3 -fsanitize=address
+else ifeq ($(MODE),animation)
+DEFINES += ANIMATION
+else ifneq ($(MODE),)
+ERROR = MODE
 endif
 
-#***********************************  RULES  **********************************#
+ifneq ($(LAST_MODE),$(MODE))
+$(NAME) : FORCE
+endif
 
-.PHONY: all
-all:
-				$(MAKELIBFT)
-				$(MAKE) $(NAME)
+# *** MISC ******************************************************************* #
 
-# ---------- VARIABLES RULES ---------- #
+LOGFILE = $(MAKE_DIR).mklog
 
-$(NAME):		$(OBJ)
-				$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBS_FLAGS)
+LOADING_BAR_SIZE = 48
 
-# ---------- COMPILED RULES ----------- #
+# *** TARGETS **************************************************************** #
 
--include $(DEP)
+.PHONY : all
+all : $(NAME)
 
-$(DIR_BUILD)%.o: %.c
-				mkdir -p $(shell dirname $@)
-				$(CC) $(CFLAGS) $(DEP_FLAGS) $(INCLUDES) -c $< -o $@
+$(NAME) : $(LIBS_PATH) $(OBJS) | PREMAKE
+	@echo "$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)" >> $(LOGFILE)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+	@echo "$(MODE)" > $(MODE_TRACE)
+	@printf "\n$(BOLD)\nCONNECT4$(RESET) @tdameros @ibertran\n"
 
-.PHONY: run
-run:	all
-				./$(NAME)
+$(BUILD_DIR)%.o : $(SRCS_DIR)%.c | count PREMAKE
+	@true || echo "$(NAME)_object"
+	$(eval COUNT_DONE := $(shell echo $$(($(COUNT_DONE) + 1))))
+	$(eval LOADING_COMPLETED := $(shell echo "$(COUNT_DONE) * $(LOADING_BAR_SIZE) / $(COUNT_TOTAL)" | bc 2> /dev/null))
+	@mkdir -p $(@D)
+	@echo "$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@" >> $(LOGFILE)
+	@$(CC) $(CPPFLAGS)  $(CFLAGS) -c $< -o $@
+	@printf "$(ERASE)$(BOLD)$(CC) $(BLUE)$(CFLAGS) $(CPPFLAGS) $(YELLOW)$(patsubst $(MAKE_DIR)%, %, $(basename $@)) $(RESET)\n"
+	@printf "🔧 $(BOLD)$(CYAN)Compiling sources: $(WHITE)["
+	@for i in $(shell seq 1 $(LOADING_COMPLETED)); do printf "="; done 
+	@for i in $(shell seq 1 $(shell echo "$(LOADING_BAR_SIZE) - $(LOADING_COMPLETED)" | bc 2> /dev/null)); do printf " "; done
+	@printf "] $(shell echo "$(COUNT_DONE) * 100 / $(COUNT_TOTAL)" | bc 2> /dev/null)%%$(RESET)"
 
-.PHONY: clean
-clean:
-				$(MAKELIBFT) clean
-				$(RM) $(DIR_BUILD)
+$(LIBS_PATH): FORCE | PREMAKE
+	@$(MAKE) -C $(@D)
 
-.PHONY: fclean
-fclean: clean
-				$(MAKELIBFT) fclean
-				$(RM) $(NAME)
+.PHONY : animation
+animation :
+	$(MAKE) MODE=animation
 
-.PHONY: re
-re:				fclean
-				$(MAKE) all
+.PHONY : debug
+debug :
+	$(MAKE) MODE=debug
 
-.PHONY: debug
-debug:
-				$(MAKE) all CFLAGS="$(DEBUG_CFLAGS)"
+.PHONY : fsanitize
+fsanitize :
+	$(MAKE) MODE=fsanitize
 
-.PHONY: check-format
-check-format:
-				clang-format -style=file $(SRC) -n --Werror
+.PHONY : clean
+clean :
+	-for f in $(dir $(LIBS_PATH)); do $(MAKE) -s -C $$f $@; done
+	rm -rf $(BUILD_DIR)
+	@printf "🚮 $(BOLD)$(RED)$(NAME) building files removed!$(RESET)\n"
 
-.PHONY: format
-format:
-				clang-format -style=file $(SRC) -i
+.PHONY : fclean
+fclean :
+	-for f in $(dir $(LIBS_PATH)); do $(MAKE) -s -C $$f $@; done
+	rm -rf $(MAKE_DIR) $(NAME)
+	@printf "🚮 $(BOLD)$(RED)$(NAME) files removed!$(RESET)\n"
 
-.PHONY: build_docker_image
-build_docker_image:
-				docker build -t ${NAME} .
+.PHONY : re
+re : fclean
+	$(MAKE)
 
-.PHONY: run_docker_container
-run_docker_container:
-				docker run --rm -it ${NAME}
+NORM_LOG = $(MAKE_DIR)norminette.log
+
+.PHONY : norminette
+norminette :
+	-for f in $(dir $(LIBS_PATH)); do $(MAKE) -s -C $$f $@; done
+	mkdir -p $(dir $(NORM_LOG))
+	norminette $(INCS_DIR) $(SRCS_DIR) > $(NORM_LOG) || true
+	if [ $$(< $(NORM_LOG) grep Error | wc -l) -eq 0 ]; \
+		then echo "$(NAME): \e[32;49;1mOK!\e[0m"; \
+		else echo "$(NAME): \e[31;49;1mKO!\e[0m" \
+			&& < $(NORM_LOG) grep Error; fi
+	$(RM) $(NORM_LOG)
+
+.PHONY : print-%
+print-% :
+	@echo $(patsubst print-%,%,$@)=
+	@echo $($(patsubst print-%,%,$@))
+
+.PHONY : count
+count :
+ifneq ($(AS_COUNTED),TRUE)
+	$(eval COUNT_TOTAL := $(shell $(MAKE) -j -n MODE=$(MODE) AS_COUNTED=TRUE | grep "$(NAME)_object" | wc -l))
+	$(eval COUNT_DONE := 0)
+endif
+
+.PHONY : run
+run : $(NAME)
+	./$(NAME)
+
+VALGRIND = \
+	valgrind \
+	--leak-check=full \
+	--trace-children=yes \
+	--track-fds=yes \
+	--show-leak-kinds=all \
+
+.PHONY : valgrind
+valgrind : debug
+	$(VALGRIND) ./$(NAME)
+
+CALLGRIND = \
+	valgrind \
+	--tool=callgrind \
+
+MAP = maps/hub.cub
+
+.PHONY : callgrind
+callgrind : debug
+	$(CALLGRIND) ./$(NAME) $(MAP)
+
+# *** SPECIAL TARGETS ******************************************************** #
+
+-include $(DEPS)
+
+.DEFAULT_GOAL := all
+
+.SILENT : clean fclean re debug fsanitize norminette
+
+.PHONY : FORCE
+FORCE :
+
+.PHONY : PREMAKE
+PREMAKE :
+ifneq ($(MODE),)
+	@printf "🔨 $(BOLD)Building $(NAME)($(MODE))...$(RESET)\n"
+else
+	@printf "🔨 $(BOLD)Building $(NAME)...$(RESET)\n"
+endif
+	@rm -f $(LOGFILE)
+ifeq ($(ERROR),MODE)
+	$(error Invalid mode: $(MODE))
+endif
+
+# *** FANCY STUFF ************************************************************ #
+
+RESET	=	\e[0m
+ERASE	=	\033[2K\r
+BOLD	=	\033[1m
+UNDER	=	\033[4m
+SUR		=	\033[7m
+GREY	=	\033[30m
+RED		=	\033[31m
+GREEN	=	\033[32m
+YELLOW	=	\033[33m
+BLUE	=	\033[34m
+PURPLE	=	\033[35m
+CYAN	=	\033[36m
+WHITE	=	\033[37m
+C12	=	\033[39m
+C13	=	\033[43m
+
+# **************************************************************************** #

@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:14:58 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 19:03:19 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 20:26:17 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# define GRID_MIN_HEIGHT (6) // 6
-# define GRID_MIN_WIDTH (7) // 7
+# define GRID_MIN_HEIGHT (6)
+# define GRID_MIN_WIDTH (7)
 # define MIN_DEPTH (2)
 
 # define RED "\e[41;1m"
+# define FG_RED "\e[31;1m"
 # define YELLOW "\e[43;1m"
+# define FG_YELLOW "\e[33;1m"
 # define BLUE "\e[44;1m"
 # define FLASHING "\033[5m"
 # define RESET "\e[0;m"
 
-#define TIME_TO_DROP (200000)
+# define TIME_TO_DROP (300000)
 
 typedef enum __attribute__((__packed__)) {
   EMPTY = 0,
@@ -46,8 +48,6 @@ typedef struct {
   pawn_t next_play;
   bool is_finished;
   uint32_t *col_order;
-
-
 } board_t;
 
 
