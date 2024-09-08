@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/07 18:12:53 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 13:00:07 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 void display_grid(board_t *board) {
-  static const char *str[] = {"  ", "🟡", "🔴", "🔵"};
+  static const char *str[] = {"  ", "🔴", "🟡", "🔵"};
 
   ft_printf("\033c");
 
@@ -50,4 +50,17 @@ void display_grid(board_t *board) {
   }
   ft_printf("┘");
   ft_printf("\n");
+}
+
+void display_winner(board_t *board) {
+  if (board->is_finished) {
+    if (board->next_play == PLAYER) {
+      ft_printf("🟡 %s Player 2 WINS! %s 🟡\n", YELLOW, RESET);
+    } else {
+      ft_printf("🔴 %s Player 1 WINS! %s 🔴\n", RED, RESET);
+    }
+  } else {
+    ft_printf("🏳️ %s DRAW GAME %s 🏳️\n", BLUE, RESET);
+  }
+  deinitialize_board(board);
 }

@@ -3,9 +3,10 @@ DIR_SRC 		=	src/
 DIR_INCLUDE		=	include/
 
 LIST_SRC		=	\
-					main.c \
-					display.c \
-					init.c \
-					ai_play.c \
-					user_play.c \
-					win.c
+					ai_play.c	\
+					display.c	\
+					heuristic.c \
+					init.c		\
+					main.c		\
+					user_play.c	\
+					win.c 

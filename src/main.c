@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 18:03:16 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 12:59:29 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y) {
 
 void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn) {
   board->grid[y * board->width + x] = pawn;
+  if (EMPTY == pawn) {
+    board->played_pawns--;
+  } else if (WIN != pawn) {
+    board->played_pawns++;
+  }
 }
 
 int8_t drop_pawn(board_t *board, uint32_t x) {
@@ -38,12 +43,10 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
       usleep(TIME_TO_DROP / board->height);
       set_pawn(board, x, y, EMPTY);
     }
-
     y++;
   }
   set_pawn(board, x, y - 1, board->next_play);
   check_win(board, x, y - 1);
-  board->played_pawns++;
   if (PLAYER == board->next_play) {
     board->next_play = IA;
   } else {
@@ -58,21 +61,20 @@ int main(int argc, char **argv) {
   if (parse_arguments(argc, argv, &board)) {
     return (1);
   }
-
   display_grid(&board);
-
   while (board.played_pawns < board.width * board.height &&
          !board.is_finished) {
     if (board.next_play == PLAYER) {
-      int8_t play = user_play(&board);
-      if (play) {
-        deinitialize_board(&board);
-        return (play == -1);
-      }
+      // int8_t play = user_play(&board);
+      // if (play) {
+      //   deinitialize_board(&board);
+      //   return (play == -1);
+      // }
+      ai_play(&board);
     } else {
       ai_play(&board);
     }
   }
-  deinitialize_board(&board);
+  display_winner(&board);
   return 0;
 }

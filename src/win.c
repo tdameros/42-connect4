@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   win.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:19:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/07 16:19:00 by tdameros         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 10:22:41 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ bool check_win(board_t *board, uint32_t x, uint32_t y) {
   };
   for (uint8_t i = 0; i < 4; i++) {
     if (win_table[i].is_win(board, x, y)) {
-      board->is_finished = 1;
-      win_table[i].set_win_pawn(board, x, y);
+      board->is_finished = true;
+      // win_table[i].set_win_pawn(board, x, y);
       return (true);
     }
   }
