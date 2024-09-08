@@ -140,19 +140,6 @@ fclean :
 re : fclean
 	$(MAKE)
 
-NORM_LOG = $(MAKE_DIR)norminette.log
-
-.PHONY : norminette
-norminette :
-	-for f in $(dir $(LIBS_PATH)); do $(MAKE) -s -C $$f $@; done
-	mkdir -p $(dir $(NORM_LOG))
-	norminette $(INCS_DIR) $(SRCS_DIR) > $(NORM_LOG) || true
-	if [ $$(< $(NORM_LOG) grep Error | wc -l) -eq 0 ]; \
-		then echo "$(NAME): \e[32;49;1mOK!\e[0m"; \
-		else echo "$(NAME): \e[31;49;1mKO!\e[0m" \
-			&& < $(NORM_LOG) grep Error; fi
-	$(RM) $(NORM_LOG)
-
 .PHONY : print-%
 print-% :
 	@echo $(patsubst print-%,%,$@)=
@@ -180,15 +167,22 @@ VALGRIND = \
 valgrind : debug
 	$(VALGRIND) ./$(NAME)
 
-CALLGRIND = \
-	valgrind \
-	--tool=callgrind \
+.PHONY: check-format
+check-format:
+	clang-format -style=file $(addprefix $(SRCS_DIR),$(SRCS)) -n --Werror
 
-MAP = maps/hub.cub
+.PHONY: format
+format:
+	clang-format -style=file $(addprefix $(SRCS_DIR),$(SRCS)) -i
 
-.PHONY : callgrind
-callgrind : debug
-	$(CALLGRIND) ./$(NAME) $(MAP)
+.PHONY: build_docker_image
+build_docker_image:
+	docker build -t $(NAME) .
+
+.PHONY: run_docker_container
+run_docker_container:
+	docker run --rm -it $(NAME)
+
 
 # *** SPECIAL TARGETS ******************************************************** #
 
