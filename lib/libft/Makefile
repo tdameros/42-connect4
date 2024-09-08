@@ -6,7 +6,7 @@
 #    By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 11:21:32 by ibertran          #+#    #+#              #
-#    Updated: 2024/09/07 15:20:02 by ibertran         ###   ########lyon.fr    #
+#    Updated: 2024/09/08 20:12:52 by ibertran         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ INCS_DIR = include/
 # *** CONFIG ***************************************************************** #
 
 CFLAGS		=	-Wall -Wextra -Werror $(OFLAGS)
-OFLAGS 		=	
+OFLAGS 		=	-Ofast
 
 CPPFLAGS	= 	$(addprefix -I, $(INCS_DIR)) \
 				-MMD -MP \
@@ -52,6 +52,8 @@ ifeq ($(MODE),debug)
 CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3
 else ifeq ($(MODE),fsanitize)
 CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3 -fsanitize=address
+else ifeq ($(MODE),animation)
+
 else ifneq ($(MODE),)
 ERROR = MODE
 endif

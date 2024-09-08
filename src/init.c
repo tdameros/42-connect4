@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:27:13 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 12:56:27 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 18:57:34 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,22 @@ static int8_t initialize_board(board_t *board, uint32_t height,
     return -1;
   }
   board->grid = malloc(width * height * sizeof(*board->grid));
-  if (NULL == board->grid) {
+  board->col_order = malloc(width * sizeof(*board->col_order));
+  board->heuristic_factor =
+      malloc(width * height * sizeof(*board->heuristic_factor));
+  if (NULL == board->grid || NULL == board->col_order ||
+      NULL == board->heuristic_factor) {
+    free(board->grid);
+    free(board->col_order);
+    free(board->heuristic_factor);
     ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
     return -1;
   }
+
   for (uint32_t i = 0; i < width * height; i++) {
     board->grid[i] = EMPTY;
   }
-  board->col_order = malloc(width * sizeof(*board->col_order));
-  if (NULL == board->col_order) {
-    free(board->grid);
-    ft_dprintf(STDERR_FILENO, "error: malloc() failure\n");
-    return -1;
-  }
+
   board->height = height;
   board->width = width;
   int32_t middle = board->width / 2;
@@ -87,15 +90,23 @@ static int8_t initialize_board(board_t *board, uint32_t height,
       index++;
     }
   }
+
+  for (uint32_t y = 0; y < board->height; y++) {
+    for (uint32_t x = 0; x < board->width; x++) {
+      set_heuristic_factor(board, x, y, get_position_score(board, x, y));
+    }
+  }
   board->played_pawns = 0;
   board->max_pawns = width * height;
-  board->next_play = rand() % 2 ? PLAYER : IA;
+  board->next_play = rand() % 2 ? PLAYER : AI;
   board->is_finished = false;
   return 0;
 }
 
 void deinitialize_board(board_t *board) {
   free(board->grid);
+  free(board->col_order);
+  free(board->heuristic_factor);
   board->height = 0;
   board->width = 0;
   board->played_pawns = 0;
