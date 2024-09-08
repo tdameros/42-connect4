@@ -40,7 +40,7 @@ INCS = \
 # *** CONFIG ***************************************************************** #
 
 CFLAGS		=	-Wall -Wextra -Werror $(OFLAGS)
-OFLAGS 		=	-Ofast
+OFLAGS 		=	-Ofast -flto -march=native
 
 DEFINES		=
 
