@@ -60,7 +60,7 @@ int8_t drop_pawn(board_t *board, uint32_t x) {
   if (EMPTY != get_pawn(board, x, 0)) {
     return (-1);
   }
-  uint8_t y = 0;
+  uint32_t y = 0;
   while (y < board->height && EMPTY == get_pawn(board, x, y)) {
 #ifdef ANIMATION
     if ((uint32_t)TIME_TO_DROP / board->height > 5000) {
