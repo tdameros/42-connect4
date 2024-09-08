@@ -1,6 +1,17 @@
-#include <stdint.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   score.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/08 23:06:50 by ibertran          #+#    #+#             */
+/*   Updated: 2024/09/08 23:06:58 by ibertran         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "connect4.h"
+
 static uint32_t calculate_score_horizontally(board_t *board, uint32_t x,
                                              uint32_t y);
 static uint32_t calculate_score_vertically(board_t *board, uint32_t x,

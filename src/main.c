@@ -6,17 +6,11 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:47:00 by tdameros          #+#    #+#             */
-/*   Updated: 2024/09/08 18:57:12 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 23:06:15 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h>
-
 #include "connect4.h"
-#include "libft.h"
 
 int main(int argc, char **argv) {
   board_t board = (board_t){0};
