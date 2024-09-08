@@ -52,7 +52,7 @@ void display_grid(board_t *board) {
   ft_printf("\n");
 }
 
-void  display_winner(board_t *board) {
+void display_winner(board_t *board) {
   if (board->is_finished) {
     if (board->next_play == PLAYER) {
       ft_printf("🟡 %s Player 2 WINS! %s 🟡\n", YELLOW, RESET);
@@ -62,5 +62,5 @@ void  display_winner(board_t *board) {
   } else {
     ft_printf("🏳️ %s DRAW GAME %s 🏳️\n", BLUE, RESET);
   }
-   deinitialize_board(board);
+  deinitialize_board(board);
 }

@@ -25,9 +25,9 @@ pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y) {
 void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn) {
   board->grid[y * board->width + x] = pawn;
   if (EMPTY == pawn) {
-   board->played_pawns--;
+    board->played_pawns--;
   } else if (WIN != pawn) {
-   board->played_pawns++;
+    board->played_pawns++;
   }
 }
 

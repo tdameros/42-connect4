@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "connect4.h"
 #include "libft.h"
@@ -35,7 +35,8 @@ int8_t user_play(board_t *board) {
     errno = 0;
     long parse = ft_strtol(gnl, &endptr);
     ft_printf("%d\n", parse);
-    if (endptr <= gnl || *endptr != '\n' || errno || parse < 0 || parse >= board->width) {
+    if (endptr <= gnl || *endptr != '\n' || errno || parse < 0 ||
+        parse >= board->width) {
       display_grid(board);
       ft_printf("invalid input!\n");
     } else if (drop_pawn(board, parse)) {

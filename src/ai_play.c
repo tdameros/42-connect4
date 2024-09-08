@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <limits.h>
-
 #include <libft.h>
+#include <limits.h>
+#include <stdlib.h>
+
 #include "connect4.h"
 
 static uint32_t count_empty_pawn(board_t *board);
@@ -36,7 +36,7 @@ static uint32_t ai_get_best_column(board_t *board) {
     }
     uint32_t drop = sim_drop_pawn(board, x);
     set_pawn(board, x, drop, board->next_play);
-  
+
     if (check_win(board, x, drop)) {
       board->is_finished = 0;
       best_x = x;
@@ -44,7 +44,8 @@ static uint32_t ai_get_best_column(board_t *board) {
       break;
     }
 
-    int32_t score = -ia_backtracking(board, MAX_DEPTH, board->next_play == IA ? PLAYER : IA);
+    int32_t score = -ia_backtracking(board, MAX_DEPTH,
+                                     board->next_play == IA ? PLAYER : IA);
     ft_printf("%d=%d\n", x, score);
     if (score > best_score) {
       best_score = score;
@@ -53,7 +54,7 @@ static uint32_t ai_get_best_column(board_t *board) {
     set_pawn(board, x, drop, EMPTY);
   }
   return best_x;
-} 
+}
 
 static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t pawn) {
   if (0 == count_empty_pawn(board)) {
@@ -62,7 +63,7 @@ static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t pawn) {
     return get_heuristic_total_score(board, pawn);
   }
 
-  for (uint32_t x = 0 ; x < board->width; x++) {
+  for (uint32_t x = 0; x < board->width; x++) {
     if (EMPTY != get_pawn(board, x, 0)) {
       continue;
     }
@@ -80,23 +81,23 @@ static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t pawn) {
   }
 
   int32_t best_score = INT32_MIN + 1;
-  for (uint32_t i = 0 ; i < board->width; i++) {
+  for (uint32_t i = 0; i < board->width; i++) {
     uint32_t x = board->col_order[i];
-      if (EMPTY != get_pawn(board, x, 0)) {
-        continue;
-      }
-      uint32_t drop = sim_drop_pawn(board, x);
-      set_pawn(board, x, drop, pawn);
-      check_win(board, x, drop);
-      int32_t score = -ia_backtracking(board, depth - 1, pawn == IA ? PLAYER : IA);
-      if (score > best_score) {
-        best_score = score;
-      }
-      set_pawn(board, x, drop, EMPTY);
+    if (EMPTY != get_pawn(board, x, 0)) {
+      continue;
+    }
+    uint32_t drop = sim_drop_pawn(board, x);
+    set_pawn(board, x, drop, pawn);
+    check_win(board, x, drop);
+    int32_t score =
+        -ia_backtracking(board, depth - 1, pawn == IA ? PLAYER : IA);
+    if (score > best_score) {
+      best_score = score;
+    }
+    set_pawn(board, x, drop, EMPTY);
   }
   return best_score;
 }
-
 
 static uint32_t sim_drop_pawn(board_t *board, uint32_t x) {
   uint32_t y = 0;
