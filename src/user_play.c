@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:24:02 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 12:59:08 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 19:05:51 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "connect4.h"
 #include "libft.h"
+
+#include "connect4.h"
 
 int8_t user_play(board_t *board) {
   uint32_t played = board->played_pawns;
@@ -48,5 +49,31 @@ int8_t user_play(board_t *board) {
     free(gnl);
   }
   display_grid(board);
+  return (0);
+}
+
+int8_t drop_pawn(board_t *board, uint32_t x) {
+  if (EMPTY != get_pawn(board, x, 0)) {
+    return (-1);
+  }
+  uint8_t y = 0;
+  while (y < board->height && EMPTY == get_pawn(board, x, y)) {
+    #ifdef ANIMATION
+    if ((uint32_t)TIME_TO_DROP / board->height > 5000) {
+      set_pawn(board, x, y, board->next_play);
+      display_grid(board);
+      usleep(TIME_TO_DROP / board->height);
+      set_pawn(board, x, y, EMPTY);
+    }
+    #endif
+    y++;
+  }
+  set_pawn(board, x, y - 1, board->next_play);
+  check_win(board, x, y - 1, false);
+  if (PLAYER == board->next_play) {
+    board->next_play = AI;
+  } else {
+    board->next_play = PLAYER;
+  }
   return (0);
 }

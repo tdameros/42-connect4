@@ -38,10 +38,10 @@ MKDIR			=	mkdir -p
 OS				=	$(shell uname -s)
 
 ifeq ($(OS), Linux)
-	LIBS_FLAGS		=	-lncursesw -L$(DIR_LIBFT) -lft
+	LIBS_FLAGS		=	-L$(DIR_LIBFT) -lft
 endif
 ifeq ($(OS), Darwin)
-	LIBS_FLAGS		=	-lncurses -L$(DIR_LIBFT) -lft
+	LIBS_FLAGS		=	-L$(DIR_LIBFT) -lft
 endif
 
 #***********************************  RULES  **********************************#

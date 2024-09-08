@@ -6,15 +6,16 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 13:53:16 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 19:11:31 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
 #include "libft.h"
 
+#include "connect4.h"
+
 void display_grid(board_t *board) {
-  static const char *str[] = {"  ", "🔴", "🟡", "🔵"};
+  static const char *str[] = {"  ", "🔴", "🟡", "\033[5m🔴\033[0m", "\033[5m🟡\033[0m"};
 
   ft_printf("\033c");
 
@@ -60,7 +61,7 @@ void display_winner(board_t *board) {
       ft_printf("🔴 %s RED WINS! %s 🔴\n", RED, RESET);
     }
   } else {
-    ft_printf("🏳️ %s DRAW GAME %s 🏳️\n", BLUE, RESET);
+    ft_printf("🏳️  %s DRAW GAME %s 🏳️\n", BLUE, RESET);
   }
-  deinitialize_board(board);
+
 }

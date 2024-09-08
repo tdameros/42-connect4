@@ -6,13 +6,14 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:27:45 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 15:30:21 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 19:05:16 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <limits.h>
 #include <stdlib.h>
+
+#include <libft.h>
 
 #include "connect4.h"
 
@@ -37,16 +38,14 @@ static uint32_t ai_get_best_column(board_t *board) {
     uint32_t drop = sim_drop_pawn(board, x);
     set_pawn(board, x, drop, board->next_play);
 
-    if (check_win(board, x, drop)) {
+    if (check_win(board, x, drop, true)) {
       board->is_finished = 0;
       best_x = x;
       set_pawn(board, x, drop, EMPTY);
       break;
     }
-
-    int32_t score = -minimax(board, MAX_DEPTH,
-                                     board->next_play == IA ? PLAYER : IA, INT32_MIN, INT32_MAX, board->next_play);
-    ft_printf("%d=%d\n", x, score);
+    int32_t score = -minimax(board, ft_max(MIN_DEPTH, 77 / board->width),
+                                     board->next_play == AI ? PLAYER : AI, INT32_MIN, INT32_MAX, board->next_play);
     if (score > best_score) {
       best_score = score;
       best_x = x;
@@ -70,7 +69,7 @@ static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alph
     uint32_t drop = sim_drop_pawn(board, x);
     set_pawn(board, x, drop, pawn);
 
-    if (check_win(board, x, drop)) {
+    if (check_win(board, x, drop, true)) {
       int32_t score = count_empty_pawn(board) / 2 + 1;
       board->is_finished = 0;
       set_pawn(board, x, drop, EMPTY);
@@ -88,9 +87,9 @@ static int32_t minimax(board_t *board, uint32_t depth, pawn_t pawn, int32_t alph
     }
     uint32_t drop = sim_drop_pawn(board, x);
     set_pawn(board, x, drop, pawn);
-    check_win(board, x, drop);
+    check_win(board, x, drop, false);
     int32_t score =
-        -minimax(board, depth - 1, pawn == IA ? PLAYER : IA, alpha, beta, maximize);
+        -minimax(board, depth - 1, pawn == AI ? PLAYER : AI, alpha, beta, maximize);
     best_score = ft_max(best_score, score);
     if (maximize == pawn) {
       alpha = ft_max(alpha, best_score);

@@ -11,3 +11,4 @@ LIST_SRC		=	\
 					user_play.c	\
 					utils.c \
 					win.c \
+					score.c \
