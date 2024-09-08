@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:14:58 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 11:33:25 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 15:32:19 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define GRID_MIN_HEIGHT (6) // 6
 # define GRID_MIN_WIDTH (7) // 7
-# define MAX_DEPTH (7)
+# define MAX_DEPTH (11)
 
 # define RED "\e[41;1m"
 # define YELLOW "\e[43;1m"
@@ -52,6 +52,8 @@ typedef struct {
 
 } board_t;
 
+int32_t ft_max(int32_t a, int32_t b);
+int32_t ft_min(int32_t a, int32_t b);
 pawn_t get_pawn(board_t *board, uint32_t x, uint32_t y);
 void set_pawn(board_t *board, uint32_t x, uint32_t y, pawn_t pawn);
 bool check_win(board_t *board, uint32_t x, uint32_t y);

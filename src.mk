@@ -9,4 +9,5 @@ LIST_SRC		=	\
 					init.c		\
 					main.c		\
 					user_play.c	\
-					win.c 
+					utils.c \
+					win.c \

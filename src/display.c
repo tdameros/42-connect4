@@ -6,7 +6,7 @@
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:22:54 by ibertran          #+#    #+#             */
-/*   Updated: 2024/09/08 13:47:11 by ibertran         ###   ########lyon.fr   */
+/*   Updated: 2024/09/08 13:53:16 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void display_grid(board_t *board) {
 void display_winner(board_t *board) {
   if (board->is_finished) {
     if (board->next_play == PLAYER) {
-      ft_printf("🟡 %s Player 2 WINS! %s 🟡\n", YELLOW, RESET);
+      ft_printf("🟡 %s YELLOW WINS! %s 🟡\n", YELLOW, RESET);
     } else {
-      ft_printf("🔴 %s Player 1 WINS! %s 🔴\n", RED, RESET);
+      ft_printf("🔴 %s RED WINS! %s 🔴\n", RED, RESET);
     }
   } else {
     ft_printf("🏳️ %s DRAW GAME %s 🏳️\n", BLUE, RESET);

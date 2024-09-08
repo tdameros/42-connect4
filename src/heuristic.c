@@ -15,7 +15,7 @@ static uint32_t get_max_height(board_t *board);
 int32_t get_heuristic_total_score(board_t *board, pawn_t pawn) {
   int32_t score = 0;
   (void)get_max_height;
-  for (uint32_t y = get_max_height(board); y < board->height; y++) {
+  for (uint32_t y = 0; y < board->height; y++) {
     for (uint32_t x = 0; x < board->width; x++) {
       score += get_heuristic_score(board, x, y, pawn);
     }
