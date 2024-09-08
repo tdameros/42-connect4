@@ -18,7 +18,7 @@
 
 # define GRID_MIN_HEIGHT (6) // 6
 # define GRID_MIN_WIDTH (7) // 7
-# define MAX_DEPTH (6)
+# define MAX_DEPTH (7)
 
 # define RED "\e[41;1m"
 # define YELLOW "\e[43;1m"

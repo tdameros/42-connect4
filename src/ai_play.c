@@ -44,7 +44,7 @@ static uint32_t ai_get_best_column(board_t *board) {
       break;
     }
 
-    int32_t score = -ia_backtracking(board, 0, board->next_play == IA ? PLAYER : IA);
+    int32_t score = -ia_backtracking(board, MAX_DEPTH, board->next_play == IA ? PLAYER : IA);
     ft_printf("%d=%d\n", x, score);
     if (score > best_score) {
       best_score = score;
@@ -58,7 +58,7 @@ static uint32_t ai_get_best_column(board_t *board) {
 static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t pawn) {
   if (0 == count_empty_pawn(board)) {
     return (0);
-  } else if (MAX_DEPTH == depth) {
+  } else if (0 == depth) {
     return get_heuristic_total_score(board, pawn);
   }
 
@@ -88,7 +88,7 @@ static int32_t ia_backtracking(board_t *board, uint32_t depth, pawn_t pawn) {
       uint32_t drop = sim_drop_pawn(board, x);
       set_pawn(board, x, drop, pawn);
       check_win(board, x, drop);
-      int32_t score = -ia_backtracking(board, depth + 1, pawn == IA ? PLAYER : IA);
+      int32_t score = -ia_backtracking(board, depth - 1, pawn == IA ? PLAYER : IA);
       if (score > best_score) {
         best_score = score;
       }
